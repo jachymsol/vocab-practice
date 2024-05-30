@@ -1,3 +1,4 @@
+import OpenAI
 import anvil.server
 
 # This is a server module. It runs on the Anvil server,
@@ -15,13 +16,11 @@ import anvil.server
 
 @anvil.server.callable
 def get_translation(word):
-  return "Table"
+  return OpenAI.get_translation(word)
 
 @anvil.server.callable
 def get_examples(word):
-  return """1. Der Tisch im Esszimmer ist aus massivem Holz.
-2. Kannst du bitte den Tisch decken?
-3. Wir haben einen neuen Tisch für das Büro gekauft."""
+  return OpenAI.get_examples(word)
 
 @anvil.server.callable
 def get_pracice_examples():
