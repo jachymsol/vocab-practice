@@ -1,4 +1,4 @@
-import OpenAI
+import OpenAI as AI
 import anvil.server
 
 # This is a server module. It runs on the Anvil server,
@@ -16,11 +16,11 @@ import anvil.server
 
 @anvil.server.callable
 def get_translation(word):
-  return OpenAI.get_translation(word)
+  return AI.get_translation(word)
 
 @anvil.server.callable
 def get_examples(word):
-  return OpenAI.get_examples(word)
+  return AI.get_examples(word)
 
 @anvil.server.callable
 def get_pracice_examples():
