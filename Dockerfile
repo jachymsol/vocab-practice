@@ -1,17 +1,32 @@
-FROM anvilworks/anvil-app-server:latest
+FROM --platform=linux/amd64 python:3-buster
 
-WORKDIR /
-USER root
+RUN apt-get -yyy update && apt-get -yyy install software-properties-common && \
+    wget -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
+    add-apt-repository 'deb https://apt.corretto.aws stable main'
 
-COPY requirements.txt .
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    (dpkg -i google-chrome-stable_current_amd64.deb || apt install -y --fix-broken) && \
+    rm google-chrome-stable_current_amd64.deb 
 
+RUN apt-get -yyy update && apt-get -yyy install java-1.8.0-amazon-corretto-jdk ghostscript
+
+RUN pip install --upgrade pip
+
+COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
+RUN anvil-app-server || true
 
+RUN mkdir /apps
 WORKDIR /apps
+
+RUN mkdir /anvil-data
+
+RUN useradd anvil
+RUN chown -R anvil:anvil /anvil-data
 USER anvil
 
 COPY . /apps/MainApp
 
-ENTRYPOINT [ "anvil-app-server", "--data-dir", "/anvil-data"]
+ENTRYPOINT ["anvil-app-server", "--data-dir", "/anvil-data"]
 
 CMD ["--app", "MainApp"]
