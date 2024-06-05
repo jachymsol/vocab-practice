@@ -96,7 +96,7 @@ components:
         properties: {text: Add to My List, role: outlined-button, icon: 'fa:plus'}
         type: Button
         layout_properties: {}
-        event_bindings: {}
+        event_bindings: {click: add_word_to_list_click}
     - name: single_word_info
       properties: {visible: false, align: center}
       type: Label

@@ -1,6 +1,7 @@
 from ._anvil_designer import HomePageTemplate
 import anvil.server
 import anvil.users
+from anvil import Notification
 
 
 class HomePage(HomePageTemplate):
@@ -40,6 +41,13 @@ class HomePage(HomePageTemplate):
     """This method is called when the button is clicked"""
     self.single_word_info.text = anvil.server.call('get_examples', self.word_input.text)
     self.single_word_info.visible = True
+  
+  def add_word_to_list_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    anvil.server.call('add_word', self.word_input.text)
+    anvil.Notification("Word added successfully").show()
+    self.word_input.text = ""
+    self.single_word_info.visible = False
 
   def login_button_click(self, **event_args):
     """This method is called when the button is clicked"""
