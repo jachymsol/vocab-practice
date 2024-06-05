@@ -1,5 +1,6 @@
 from ._anvil_designer import HomePageTemplate
 from anvil import *
+import anvil.users
 import anvil.server
 
 
