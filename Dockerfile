@@ -25,7 +25,11 @@ RUN useradd anvil
 RUN chown -R anvil:anvil /anvil-data
 USER anvil
 
-COPY . /apps/MainApp
+COPY server_code /apps/MainApp/server_code
+COPY client_code /apps/MainApp/client_code
+COPY theme /apps/MainApp/theme
+COPY __init__.py /apps/MainApp/__init__.py
+COPY anvil.yaml /apps/MainApp/anvil.yaml
 
 ENTRYPOINT ["anvil-app-server", "--data-dir", "/anvil-data"]
 
