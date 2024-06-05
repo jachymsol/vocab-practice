@@ -10,9 +10,6 @@ class HomePage(HomePageTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    if not anvil.users.get_user():
-      self.start_practice_button.enabled = False
-      self.start_practice_button.text = "Log-in to Practice"
     # Any code you write here will run before the form opens.
 
   def start_practice_button_click(self, **event_args):
@@ -43,3 +40,11 @@ class HomePage(HomePageTemplate):
     """This method is called when the button is clicked"""
     self.single_word_info.text = anvil.server.call('get_examples', self.word_input.text)
     self.single_word_info.visible = True
+
+  def login_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    anvil.users.login_with_form(allow_cancel=True)
+    self.login_button.enabled = False
+    self.login_button.text = "Logged-In"
+    self.item['logged_in'] = True
+    self.refresh_data_bindings()
