@@ -21,7 +21,3 @@ def get_translation(word):
 @anvil.server.callable
 def get_examples(word):
   return AI.get_examples(word)
-
-@anvil.server.callable
-def get_pracice_examples():
-  return get_examples("Tisch")
