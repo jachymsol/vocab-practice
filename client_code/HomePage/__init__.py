@@ -6,31 +6,37 @@ from anvil import Notification
 
 class HomePage(HomePageTemplate):
   def __init__(self, **properties):
+    # Set Item properties
+    self.item['logged_in'] = None
     self.item['practice_word'] = None
+    self.item['practice_examples'] = None
     self.item['practice_translation'] = None
+    self.item['practice_translation_visible'] = None
+    
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+    if anvil.users.get_user():
+      self.show_logged_in()
+
+  def show_next_practice(self):
+    self.item['practice_word'], self.item['practice_examples'], self.item['practice_translation'] = anvil.server.call('get_practice_lesson')
+    self.item['practice_translation_visible'] = False
+    self.refresh_data_bindings()
 
   def start_practice_button_click(self, **event_args):
     """This method is called when the button is clicked"""
-    self.item['practice_word'] = anvil.server.call('get_practice_word')
-    self.item['practice_translation'] = None
-    self.practice_sentences.text = anvil.server.call('get_examples', word=self.item['practice_word'])
-    self.refresh_data_bindings()
+    self.show_next_practice()
 
   def show_practice_translation_button_click(self, **event_args):
     """This method is called when the button is clicked"""
-    self.item['practice_translation'] = anvil.server.call('get_translation', self.item['practice_word'])
+    self.item['practice_translation_visible'] = True
     self.refresh_data_bindings()
 
   def next_practice_button_click(self, **event_args):
     """This method is called when the button is clicked"""
-    self.item['practice_word'] = anvil.server.call('get_practice_word')
-    self.item['practice_translation'] = None
-    self.practice_sentences.text = anvil.server.call('get_examples', word=self.item['practice_word'])
-    self.refresh_data_bindings()
+    self.show_next_practice()
 
   def view_translation_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -52,6 +58,10 @@ class HomePage(HomePageTemplate):
   def login_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     anvil.users.login_with_form(allow_cancel=True)
+    if anvil.users.get_user():
+      self.show_logged_in()
+
+  def show_logged_in(self):
     self.login_button.enabled = False
     self.login_button.text = "Logged-In"
     self.item['logged_in'] = True

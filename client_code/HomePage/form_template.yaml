@@ -35,6 +35,7 @@ components:
       layout_properties: {grid_position: 'TKXDUU,MXEPAB'}
       data_bindings:
       - {property: visible, code: 'self.item[''practice_word''] != None', writeback: false}
+      - {property: text, code: 'self.item[''practice_examples'']', writeback: false}
     - name: practice_next_panel
       properties: {role: outlined-card, visible: false}
       type: ColumnPanel
@@ -45,7 +46,7 @@ components:
         type: Button
         layout_properties: {grid_position: 'UFNEMP,LAXVTS XUYNNL,YQTMTG'}
         data_bindings:
-        - {property: visible, code: 'self.item[''practice_translation''] == None',
+        - {property: visible, code: 'not self.item[''practice_translation_visible'']',
           writeback: false}
         event_bindings: {click: show_practice_translation_button_click}
       - name: translation_label
@@ -53,7 +54,7 @@ components:
         type: Label
         layout_properties: {grid_position: 'UFNEMP,LAXVTS FXZOOP,LMBKIZ'}
         data_bindings:
-        - {property: visible, code: 'self.item[''practice_translation''] != None',
+        - {property: visible, code: 'self.item[''practice_translation_visible'']',
           writeback: false}
         - {property: text, code: 'self.item[''practice_translation'']', writeback: false}
       - name: next_practice_button
