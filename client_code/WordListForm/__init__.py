@@ -1,5 +1,4 @@
 from ._anvil_designer import WordListFormTemplate
-from ..HomePage import HomePage
 from anvil import *
 import anvil.server
 import anvil.users
@@ -17,4 +16,12 @@ class WordListForm(WordListFormTemplate):
 
   def title_link_click(self, **event_args):
     """This method is called when the link is clicked"""
-    anvil.open_form(HomePage())
+    anvil.open_form('HomePage')
+
+  def home_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    anvil.open_form('HomePage')
+
+  def word_list_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    anvil.open_form('WordListForm')
