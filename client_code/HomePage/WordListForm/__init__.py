@@ -13,15 +13,3 @@ class WordListForm(WordListFormTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
-
-  def title_link_click(self, **event_args):
-    """This method is called when the link is clicked"""
-    anvil.open_form('HomePage')
-
-  def home_button_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    anvil.open_form('HomePage')
-
-  def word_list_button_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    anvil.open_form('WordListForm')
