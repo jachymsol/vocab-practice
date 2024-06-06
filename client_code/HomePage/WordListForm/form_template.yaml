@@ -1,7 +1,17 @@
 container: {type: ColumnPanel}
 components:
-- name: repeating_panel_1
-  properties: {item_template: HomePage.WordListForm.ItemTemplate1}
-  type: RepeatingPanel
-  layout_properties: {grid_position: 'ZOOJET,WZLLTT'}
+- name: data_grid_1
+  properties:
+    columns:
+    - {id: WWWIWI, data_key: word, title: word}
+    - {id: FAYELS, data_key: n_practiced, title: n_practiced}
+    - {id: XZSAOJ, data_key: learned, title: learned}
+    - {id: AUAFVW, data_key: confidence, title: confidence}
+    - {id: ZEWBDB, data_key: remove, title: Column 1}
+  type: DataGrid
+  components:
+  - name: repeating_panel_2
+    properties: {item_template: HomePage.WordListForm.RowTemplate1}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'BIWKGW,AHHPMT'}
 is_package: true
