@@ -21,6 +21,9 @@ db_schema:
     client: none
     server: full
     columns:
+    - name: guid
+      admin_ui: {width: 200}
+      type: string
     - name: email
       admin_ui: {width: 200}
       type: string
@@ -45,9 +48,6 @@ db_schema:
     - name: remembered_logins
       admin_ui: {width: 200}
       type: simpleObject
-    - name: guid
-      admin_ui: {order: -1, width: 200}
-      type: string
   words:
     client: none
     server: full

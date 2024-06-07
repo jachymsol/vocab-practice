@@ -1,0 +1,32 @@
+is_package: true
+container: {type: DataRowPanel}
+components:
+- name: word_label
+  properties: {bold: true}
+  type: Label
+  layout_properties: {column: WWWIWI}
+  data_bindings:
+  - {property: text, code: 'self.item[''word'']', writeback: false}
+- name: n_practiced_label
+  properties: {}
+  type: Label
+  layout_properties: {column: FAYELS}
+  data_bindings:
+  - {property: text, code: 'self.item[''n_practiced'']', writeback: false}
+- name: learned_label
+  properties: {}
+  type: Label
+  layout_properties: {column: XZSAOJ}
+  data_bindings:
+  - {property: text, code: 'self.item[''learned'']', writeback: false}
+- name: confidence_label
+  properties: {}
+  type: Label
+  layout_properties: {column: AUAFVW}
+  data_bindings:
+  - {property: text, code: 'self.item[''confidence'']', writeback: false}
+- name: remove_word_button
+  properties: {text: '', icon: 'fa:trash', icon_align: left}
+  type: Button
+  layout_properties: {column: ZEWBDB}
+  event_bindings: {click: remove_word_button_click}

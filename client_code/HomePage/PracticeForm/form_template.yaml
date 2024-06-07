@@ -1,0 +1,105 @@
+container: {type: ColumnPanel}
+components:
+- type: ColumnPanel
+  properties: {col_widths: '{}', visible: true}
+  name: content_panel
+  layout_properties: {slot: default}
+  components:
+  - name: practice_card
+    properties: {role: elevated-card, spacing_below: large}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'KFLBDI,TWONHR'}
+    components:
+    - name: start_practice_button
+      properties: {text: Start Practice, role: tonal-button, font: '', font_size: 32,
+        enabled: true}
+      type: Button
+      layout_properties: {grid_position: 'QVBZLY,TNRZZN'}
+      event_bindings: {click: start_practice_button_click}
+      data_bindings:
+      - {property: visible, code: 'self.item[''practice_word''] == None', writeback: false}
+    - name: practice_word
+      properties: {align: center, role: title, background: ''}
+      type: Label
+      layout_properties: {grid_position: 'VFXLHH,MJGRJX'}
+      data_bindings:
+      - {property: text, code: 'self.item[''practice_word'']', writeback: false}
+      - {property: visible, code: 'self.item[''practice_word''] != None', writeback: false}
+    - name: practice_sentences
+      properties: {visible: false, align: center, role: body, background: ''}
+      type: Label
+      layout_properties: {grid_position: 'TKXDUU,MXEPAB'}
+      data_bindings:
+      - {property: visible, code: 'self.item[''practice_word''] != None', writeback: false}
+      - {property: text, code: 'self.item[''practice_examples'']', writeback: false}
+    - name: practice_next_panel
+      properties: {role: outlined-card, visible: false}
+      type: ColumnPanel
+      layout_properties: {grid_position: 'DEHYJQ,DZVFKP'}
+      components:
+      - name: show_practice_translation_button
+        properties: {text: Show Translation, role: outlined-button}
+        type: Button
+        layout_properties: {grid_position: 'UFNEMP,LAXVTS XUYNNL,YQTMTG'}
+        data_bindings:
+        - {property: visible, code: 'not self.item[''practice_translation_visible'']',
+          writeback: false}
+        event_bindings: {click: show_practice_translation_button_click}
+      - name: translation_label
+        properties: {visible: false, align: center, bold: true, font_size: 16}
+        type: Label
+        layout_properties: {grid_position: 'UFNEMP,LAXVTS FXZOOP,LMBKIZ'}
+        data_bindings:
+        - {property: visible, code: 'self.item[''practice_translation_visible'']',
+          writeback: false}
+        - {property: text, code: 'self.item[''practice_translation'']', writeback: false}
+      - name: next_practice_button
+        properties: {text: Next, role: outlined-button}
+        type: Button
+        layout_properties: {grid_position: 'UFNEMP,KJWPWY'}
+        event_bindings: {click: next_practice_button_click}
+      data_bindings:
+      - {property: visible, code: 'self.item[''practice_word''] != None', writeback: false}
+  - name: spacer_1
+    properties: {height: 32}
+    type: Spacer
+    layout_properties: {grid_position: 'QOGSRL,GKDLIL'}
+  - name: dictionary_card
+    properties: {role: elevated-card, background: '', spacing_above: large}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'IXQZQP,XKTBKA'}
+    components:
+    - name: dictionary_title
+      properties: {text: Dictionary, role: headline, icon: 'fa:book'}
+      type: Label
+      layout_properties: {grid_position: 'CDRQIB,KWUHXI'}
+    - name: flow_panel_1
+      properties: {spacing_above: large, spacing_below: large}
+      type: FlowPanel
+      layout_properties: {grid_position: 'SZSXDL,DPMFJJ'}
+      components:
+      - name: word_input
+        properties: {}
+        type: TextBox
+        layout_properties: {width: null, expand: true}
+      - name: view_translation
+        properties: {text: View Translation, role: outlined-button, icon: 'fa:book'}
+        type: Button
+        layout_properties: {}
+        event_bindings: {click: view_translation_click}
+      - name: view_word_examples
+        properties: {text: Generate Examples, role: outlined-button, icon: 'fa:lightbulb-o',
+          icon_align: left, italic: false}
+        type: Button
+        layout_properties: {}
+        event_bindings: {click: view_word_examples_click}
+      - name: add_word_to_list
+        properties: {text: Add to My List, role: outlined-button, icon: 'fa:plus'}
+        type: Button
+        layout_properties: {}
+        event_bindings: {click: add_word_to_list_click}
+    - name: single_word_info
+      properties: {visible: false, align: center}
+      type: Label
+      layout_properties: {grid_position: 'OFGWHY,CYDAOX'}
+is_package: true

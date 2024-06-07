@@ -4,8 +4,10 @@ from openai.types.beta.threads import Text
 from typing_extensions import override
 from dotenv import load_dotenv
 
+
 EXAMPLE_ASSISTANT_ID = "asst_FxrmP4ZebEu5IaReBSSJSZzX"
 TRANSLATION_ASSISTANT_ID = "asst_hij1AS8ekMYhBvYnvJMG2e3U"
+
 
 class EventHandler(AssistantEventHandler):
   @override
@@ -16,12 +18,14 @@ class EventHandler(AssistantEventHandler):
   def on_text_delta(self, delta, snapshot):
     print(delta.value, end="", flush=True)
 
+
 if not os.getenv('OPENAI_API_KEY'):
   load_dotenv('Vocabulary_Practice/.env')
 
 client = OpenAI()
 examples_assistant = client.beta.assistants.retrieve(EXAMPLE_ASSISTANT_ID)
 translations_assistant = client.beta.assistants.retrieve(TRANSLATION_ASSISTANT_ID)
+
 
 def get_response_stream(word, assistant):
   thread = client.beta.threads.create()
@@ -37,6 +41,7 @@ def get_response_stream(word, assistant):
   ) as stream:
     stream.until_done()
   return 
+
 
 def get_response_batch(word, assistant):
   thread = client.beta.threads.create()
@@ -55,8 +60,10 @@ def get_response_batch(word, assistant):
   else:
     return run.status
 
+
 def get_examples(word):
   return get_response_batch(word, examples_assistant)
+
 
 def get_translation(word):
   return get_response_batch(word, translations_assistant)
