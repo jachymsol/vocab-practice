@@ -1,4 +1,6 @@
 import os
+import json
+import jsonschema
 from openai import AssistantEventHandler, OpenAI
 from openai.types.beta.threads import Text
 from typing_extensions import override
@@ -43,12 +45,12 @@ def get_response_stream(word, assistant):
   return 
 
 
-def get_response_batch(word, assistant):
+def get_response_batch(content, assistant):
   thread = client.beta.threads.create()
   client.beta.threads.messages.create(
     thread_id=thread.id,
     role='user',
-    content=word
+    content=str(content)
   )
   run = client.beta.threads.runs.create_and_poll(
     assistant_id=assistant.id,
@@ -61,9 +63,47 @@ def get_response_batch(word, assistant):
     return run.status
 
 
-def get_examples(word):
-  return get_response_batch(word, examples_assistant)
+def verify_response(response, schema):
+  try:
+    jsonschema.validate(response, schema)
+    return True
+  except jsonschema.ValidationError:
+    return False
 
 
-def get_translation(word):
-  return get_response_batch(word, translations_assistant)
+def get_examples(language, word, num_examples):
+  model_input = {"language": language, "word": word, "num_examples": num_examples}
+  output_schema = {
+    "type": "object",
+    "properties": {
+      "exists": {"type": "boolean"},
+      "examples": {"type": "array", "items": {"type": "string"}},
+    },
+    "additionalProperties": False,
+  }
+
+  model_output = get_response_batch(model_input, examples_assistant)
+  response = json.loads(model_output)
+  if verify_response(response, output_schema):
+    return {"error": None, **response}
+  else:
+    return {"error": "Invalid response from OpenAI"}
+
+
+def get_translation(language, word):
+  model_input = {"language": language, "word": word}
+  output_schema = {
+    "type": "object",
+    "properties": {
+      "exists": {"type": "string"},
+      "translation": {"type": "string"}
+    },
+    "additionalProperties": False,
+  }
+
+  model_output = get_response_batch(model_input, translations_assistant)
+  response = json.loads(model_output)
+  if verify_response(response, output_schema):
+    return {"error": None, **response}
+  else:
+    return {"error": "Invalid response from OpenAI"}
