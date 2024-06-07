@@ -9,4 +9,4 @@ class WordListForm(WordListFormTemplate):
 
     # Any code you write here will run before the form opens.
     words_list = anvil.server.call('get_words_list')
-    self.word_row.items = [{'word': word['word'], 'n_practiced': word['n_practiced'], 'learned': word['learned'], 'confidence': word['guid']} for word in words_list]
+    self.word_row.items = [{'word': word['word'], 'n_practiced': word['n_practiced'], 'learned': word['learned'], 'confidence': word['confidence']} for word in words_list]

@@ -86,8 +86,8 @@ class PracticeForm(PracticeFormTemplate):
             return
 
         res = anvil.server.call("add_word_to_list", self.word_input.text)
-        if res.error:
-            anvil.Notification(res.error, style="danger").show()
+        if "error" in res:
+            anvil.Notification(res.get("error"), style="danger").show()
             return
         
         anvil.Notification(f"Word <strong>{self.word_input.text}</strong> added successfully", style="success").show()
