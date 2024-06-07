@@ -12,6 +12,7 @@ class WordRowTemplate(WordRowTemplateTemplate):
   def toggle_learned_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     anvil.server.call('set_word_learned', self.item['word'], not self.item['learned'])
+    self.parent.raise_event('x-refresh-words')
   
   def remove_word_button_click(self, **event_args):
     """This method is called when the button is clicked"""

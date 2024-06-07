@@ -35,8 +35,9 @@ components:
     type: Button
     layout_properties: {}
     data_bindings:
-    - {property: icon, code: '''fa:check'' if self.item[''learned''] else ''fa:close''',
+    - {property: icon, code: '''fa:close'' if self.item[''learned''] else ''fa:check''',
       writeback: false}
+    event_bindings: {click: toggle_learned_button_click}
   - name: remove_word_button
     properties: {text: '', icon: 'fa:trash', icon_align: top}
     type: Button

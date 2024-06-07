@@ -25,6 +25,14 @@ def add_word(word):
     )
 
 
+def set_word_learned(word, learned):
+    app_tables.words.search(
+        guid=anvil.users.get_user()['guid'],
+        language='de',
+        word=word
+    )[0]['learned'] = learned
+
+
 def get_list():
     return app_tables.words.search(
         guid=anvil.users.get_user()['guid'],
