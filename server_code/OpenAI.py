@@ -84,10 +84,8 @@ def get_examples(language, word, num_examples):
 
   model_output = get_response_batch(model_input, examples_assistant)
   response = json.loads(model_output)
-  if verify_response(response, output_schema):
-    return {"error": None, **response}
-  else:
-    return {"error": "Invalid response from OpenAI"}
+  verify_response(response, output_schema)
+  return response
 
 
 def get_translation(language, word):
@@ -103,7 +101,5 @@ def get_translation(language, word):
 
   model_output = get_response_batch(model_input, translations_assistant)
   response = json.loads(model_output)
-  if verify_response(response, output_schema):
-    return {"error": None, **response}
-  else:
-    return {"error": "Invalid response from OpenAI"}
+  verify_response(response, output_schema)
+  return response

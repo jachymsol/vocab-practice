@@ -14,36 +14,33 @@ def get_practice_lesson():
     examples = AI.get_examples('de', word, 3)
     translation = AI.get_translation('de', word)
 
-    if examples.error or translation.error:
-        return {"error": f"Error getting practice lesson: {examples.error if examples.error else translation.error}"}
+    if "error" in examples or "error" in translation:
+        return {"error": f"Error getting practice lesson: {examples['error'] if 'error' in examples else translation['error']}"}
     return {
-        "error": None, 
         "word": word,
-        "exists": examples.exists and translation.exists,
-        "examples": examples.examples, 
-        "translation": translation.translation
+        "exists": examples.get("exists", False) and translation.get("exists", False),
+        "examples": examples.get("examples", []),
+        "translation": translation.get("translation", "")
     }
 
 @anvil.server.callable
 def get_translation(word):
     translation = AI.get_translation('de', word)
-    if translation.error:
-        return {"error": f"Error getting translation: {translation.error}"}
+    if "error" in translation:
+        return {"error": f"Error getting translation: {translation['error']}"}
     return {
-        "error": None,
-        "exists": translation.exists,
-        "translation": translation.translation
+        "exists": translation.get("exists", False),
+        "translation": translation.get("translation", "")
     }
 
 @anvil.server.callable
 def get_examples(word):
     examples = AI.get_examples('de', word, 5)
-    if examples.error:
-        return {"error": f"Error getting examples: {examples.error}"}
+    if "error" in examples:
+        return {"error": f"Error getting examples: {examples['error']}"}
     return {
-        "error": None,
-        "exists": examples.exists,
-        "examples": examples.examples
+        "exists": examples.get("exists", False),
+        "examples": examples.get("examples", [])
     }
 
 @anvil.server.callable
@@ -53,7 +50,7 @@ def get_words_list():
 @anvil.server.callable
 def add_word_to_list(word):
     WordList.add_word(word)
-    return {"error": None}
+    return {}
 
 @anvil.server.callable
 def delete_word(word):

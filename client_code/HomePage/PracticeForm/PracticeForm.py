@@ -18,29 +18,31 @@ class PracticeForm(PracticeFormTemplate):
 
     def show_next_practice(self):
         res = anvil.server.call('get_practice_lesson')
-        if res.error:
-            anvil.Notification(res.error, style="danger").show()
+        if "error" in res:
+            anvil.Notification(res.get("error"), style="danger").show()
             return
-        if not res.exists:
-            anvil.Notification(f"The word {res.word} does not exist.", style="warning").show()
+        if not res.get("exists"):
+            anvil.Notification(f"The word {res.get('word')} does not exist.", style="warning").show()
             return
         
-        self.item['practice_word'] = res.word
-        self.item['practice_examples'] = '\n'.join(res.examples)
-        self.item['practice_translation'] = res.translation
+        self.item["practice_word"] = res.get("word")
+        self.item["practice_examples"] = "\n".join(res.get("examples"))
+        self.item["practice_translation"] = res.get("translation")
 
-        self.item['practice_translation_visible'] = False
+        self.item["practice_translation_visible"] = False
         self.refresh_data_bindings()
 
     def start_practice_button_click(self, **event_args):
         """This method is called when the button is clicked"""
         if anvil.users.get_user() == None:
             anvil.Notification("You must be logged in to start practicing", style="warning").show()
+            return
+
         self.show_next_practice()
 
     def show_practice_translation_button_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.item['practice_translation_visible'] = True
+        self.item["practice_translation_visible"] = True
         self.refresh_data_bindings()
 
     def next_practice_button_click(self, **event_args):
@@ -49,35 +51,41 @@ class PracticeForm(PracticeFormTemplate):
 
     def view_translation_click(self, **event_args):
         """This method is called when the button is clicked"""
-        res = anvil.server.call('get_translation', self.word_input.text)
-        if res.error:
-            anvil.Notification(res.error, style="danger").show()
+        res = anvil.server.call("get_translation", self.word_input.text)
+        if "error" in res:
+            anvil.Notification(res.get("error"), style="danger").show()
             return
 
-        if not res.exists:
+        if res.get("exists"):
+            self.single_word_info.text = res.get("translation") 
+            self.single_word_info.visible = True
+        else:
             self.single_word_info.text = f"The word {self.word_input.text} does not exist."
             self.single_word_info.visible = True
 
-        self.single_word_info.text = res.translation 
-        self.single_word_info.visible = True
 
     def view_word_examples_click(self, **event_args):
         """This method is called when the button is clicked"""
-        res = anvil.server.call('get_examples', self.word_input.text)
-        if res.error:
-            anvil.Notification(res.error, style="danger").show()
+        res = anvil.server.call("get_examples", self.word_input.text)
+        if "error" in res:
+            anvil.Notification(res.get("error"), style="danger").show()
             return
         
-        if not res.exists:
+        if res.get("exists"):
+            self.single_word_info.text = '\n'.join(res.get("examples"))
+            self.single_word_info.visible = True
+        else:
             self.single_word_info.text = f"The word {self.word_input.text} does not exist."
             self.single_word_info.visible = True
 
-        self.single_word_info.text = '/n'.join(res.examples)
-        self.single_word_info.visible = True
   
     def add_word_to_list_click(self, **event_args):
         """This method is called when the button is clicked"""
-        res = anvil.server.call('add_word_to_list', self.word_input.text)
+        if anvil.users.get_user() == None:
+            anvil.Notification("You must be logged in to add a word", style="warning").show()
+            return
+
+        res = anvil.server.call("add_word_to_list", self.word_input.text)
         if res.error:
             anvil.Notification(res.error, style="danger").show()
             return
