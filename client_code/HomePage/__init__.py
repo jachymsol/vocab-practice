@@ -19,7 +19,10 @@ class HomePage(HomePageTemplate):
   def login_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     anvil.users.login_with_form(allow_cancel=True)
-    if anvil.users.get_user():
+    user = anvil.users.get_user()
+    if user:
+      if user['guid'] == None:
+        anvil.server.call('generate_guid', user.get_id())
       self.show_logged_in()
 
   def show_logged_in(self):

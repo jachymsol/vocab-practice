@@ -9,14 +9,14 @@ def get_practice_word():
 
 def add_word(word):
     app_tables.words.add_row(
-        guid=anvil.users.get_user().get_id(),
+        guid=anvil.users.get_user()['guid'],
         word=word,
         language='de'
     )
 
 def get_list():
     return app_tables.words.search(
-        guid=anvil.users.get_user().get_id(), 
+        guid=anvil.users.get_user()['guid'],
         language='de'
     )
 
