@@ -12,6 +12,9 @@ components:
   name: navbar_links
   layout_properties: {slot: nav-right}
   components:
+  - name: logged_email
+    properties: {}
+    type: Label
   - name: login_button
     properties: {text: Log In, role: outlined-button}
     type: Button
