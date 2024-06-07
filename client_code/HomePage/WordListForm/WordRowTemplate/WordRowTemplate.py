@@ -9,6 +9,10 @@ class WordRowTemplate(WordRowTemplateTemplate):
 
     # Any code you write here will run before the form opens.
 
+  def toggle_learned_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    anvil.server.call('set_word_learned', self.item['word'], not self.item['learned'])
+  
   def remove_word_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     if anvil.confirm(f"Do you wish to delete word {self.item['word']}?"):

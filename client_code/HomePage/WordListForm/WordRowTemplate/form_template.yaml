@@ -25,8 +25,20 @@ components:
   layout_properties: {column: AUAFVW}
   data_bindings:
   - {property: text, code: 'self.item[''confidence'']', writeback: false}
-- name: remove_word_button
-  properties: {text: '', icon: 'fa:trash', icon_align: left}
-  type: Button
+- name: flow_panel_1
+  properties: {}
+  type: FlowPanel
   layout_properties: {column: ZEWBDB}
-  event_bindings: {click: remove_word_button_click}
+  components:
+  - name: toggle_learned_button
+    properties: {text: '', icon: '', icon_align: top}
+    type: Button
+    layout_properties: {}
+    data_bindings:
+    - {property: icon, code: '''fa:check'' if self.item[''learned''] else ''fa:close''',
+      writeback: false}
+  - name: remove_word_button
+    properties: {text: '', icon: 'fa:trash', icon_align: top}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: remove_word_button_click}
