@@ -13,3 +13,9 @@ def add_word(word):
         word=word,
         language='de'
     )
+
+def get_list():
+    return app_tables.words.search(
+        guid=anvil.users.get_user().get_id(), 
+        language='de'
+    )

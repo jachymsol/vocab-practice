@@ -1,17 +1,17 @@
 container: {type: ColumnPanel}
 components:
-- name: data_grid_1
+- name: words_table
   properties:
     columns:
-    - {id: WWWIWI, data_key: word, title: word}
-    - {id: FAYELS, data_key: n_practiced, title: n_practiced}
-    - {id: XZSAOJ, data_key: learned, title: learned}
-    - {id: AUAFVW, data_key: confidence, title: confidence}
-    - {id: ZEWBDB, data_key: remove, title: Column 1}
+    - {id: WWWIWI, data_key: word, title: Word}
+    - {id: FAYELS, data_key: n_practiced, title: Times Practiced}
+    - {id: XZSAOJ, data_key: learned, title: Marked as Learned}
+    - {id: AUAFVW, data_key: confidence, title: Confidence}
+    - {id: ZEWBDB, data_key: remove, title: Remove Word}
   type: DataGrid
   components:
-  - name: repeating_panel_2
-    properties: {item_template: HomePage.WordListForm.RowTemplate1}
+  - name: word_row
+    properties: {item_template: HomePage.WordListForm.WordRowTemplate}
     type: RepeatingPanel
   layout_properties: {grid_position: 'BIWKGW,AHHPMT'}
 is_package: true
