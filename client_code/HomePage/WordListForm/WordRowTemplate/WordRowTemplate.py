@@ -1,7 +1,5 @@
-from ._anvil_designer import WordRowTemplateTemplate
+from ._anvil_designer import WordRowTemplateTemplate # type: ignore
 import anvil.server
-import anvil.users
-from anvil.tables import app_tables
 
 
 class WordRowTemplate(WordRowTemplateTemplate):

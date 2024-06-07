@@ -1,5 +1,4 @@
-from ._anvil_designer import WordListFormTemplate
-from anvil import Button
+from ._anvil_designer import WordListFormTemplate # type: ignore
 import anvil.server
 
 

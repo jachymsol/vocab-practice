@@ -1,9 +1,8 @@
-from ._anvil_designer import HomePageTemplate
+from ._anvil_designer import HomePageTemplate # type: ignore
 from PracticeForm import PracticeForm
 from WordListForm import WordListForm
 import anvil.server
 import anvil.users
-from anvil import Notification
 
 
 class HomePage(HomePageTemplate):

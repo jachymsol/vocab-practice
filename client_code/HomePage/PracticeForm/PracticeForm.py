@@ -1,5 +1,4 @@
-from ._anvil_designer import PracticeFormTemplate
-from anvil import *
+from ._anvil_designer import PracticeFormTemplate # type: ignore
 import anvil.server
 import anvil.users
 
