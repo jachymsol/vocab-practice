@@ -57,10 +57,10 @@ class PracticeForm(PracticeFormTemplate):
             return
 
         if res.get("exists"):
-            self.single_word_info.text = res.get("translation") 
+            self.single_word_info.content = res.get("translation") 
             self.single_word_info.visible = True
         else:
-            self.single_word_info.text = f"The word {self.word_input.text} does not exist."
+            self.single_word_info.content = f"The word _{self.word_input.text}_ does not exist."
             self.single_word_info.visible = True
 
 
@@ -72,10 +72,10 @@ class PracticeForm(PracticeFormTemplate):
             return
         
         if res.get("exists"):
-            self.single_word_info.text = '\n'.join(res.get("examples"))
+            self.single_word_info.content = '\n'.join(res.get("examples"))
             self.single_word_info.visible = True
         else:
-            self.single_word_info.text = f"The word {self.word_input.text} does not exist."
+            self.single_word_info.content = f"The word _{self.word_input.text}_ does not exist."
             self.single_word_info.visible = True
 
   

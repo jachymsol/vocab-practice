@@ -99,7 +99,7 @@ components:
         layout_properties: {}
         event_bindings: {click: add_word_to_list_click}
     - name: single_word_info
-      properties: {visible: false, align: center}
-      type: Label
+      properties: {visible: false, align: center, format: markdown}
+      type: RichText
       layout_properties: {grid_position: 'OFGWHY,CYDAOX'}
 is_package: true
