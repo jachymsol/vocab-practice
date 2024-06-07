@@ -19,3 +19,10 @@ def get_list():
         guid=anvil.users.get_user().get_id(), 
         language='de'
     )
+
+def delete_word(word):
+    app_tables.words.search(
+        guid=anvil.users.get_user()['guid'],
+        language='de',
+        word=word
+    )[0].delete()
