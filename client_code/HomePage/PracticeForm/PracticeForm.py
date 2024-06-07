@@ -49,7 +49,7 @@ class PracticeForm(PracticeFormTemplate):
   def add_word_to_list_click(self, **event_args):
     """This method is called when the button is clicked"""
     anvil.server.call('add_word_to_list', self.word_input.text)
-    anvil.Notification("Word added successfully").show()
+    anvil.Notification(f"Word <strong>{self.word_input.text}</strong> added successfully", style="success").show()
     self.word_input.text = ""
     self.single_word_info.visible = False
     self.refresh_data_bindings()

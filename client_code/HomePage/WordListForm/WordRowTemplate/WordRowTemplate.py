@@ -13,5 +13,5 @@ class WordRowTemplate(WordRowTemplateTemplate):
     """This method is called when the button is clicked"""
     if anvil.confirm(f"Do you wish to delete word {self.item['word']}?"):
       anvil.server.call('delete_word', self.item['word'])
-      anvil.Notification(f"Word {self.item['word']} deleted successfully").show()
+      anvil.Notification(f"Word <strong>{self.item['word']}</strong> deleted successfully", style="success").show()
       self.remove_from_parent()
