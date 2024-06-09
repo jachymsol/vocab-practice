@@ -17,6 +17,7 @@ def get_practice_lesson():
 
     cached_lesson = NextPracticeCache.get_cached_practice(user=user)
     if cached_lesson:
+        WordList.increment_word_practiced(cached_lesson['next_word'], user=user)
         NextPracticeCache.invalidate_cached_practice(user=user)
         anvil.server.launch_background_task('refresh_next_practice_cache_task', user=user, force=True)
         return {
@@ -33,6 +34,7 @@ def get_practice_lesson():
     if "error" in examples or "error" in translation:
         return {"error": f"Error getting practice lesson: {examples['error'] if 'error' in examples else translation['error']}"}
     
+    WordList.increment_word_practiced(word, user=user)
     anvil.server.launch_background_task('refresh_next_practice_cache_task', user=user, force=True)
     return {
         "word": word,

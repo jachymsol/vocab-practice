@@ -13,13 +13,15 @@ def get_practice_word(user=None):
         learned=False
     )
     word_to_practice = random.choices(words, weights=[100 - word['confidence'] for word in words], k=1)[0]
-    word_to_practice['n_practiced'] += 1
     return word_to_practice['word']
 
 
-def add_word(word):
+def add_word(word, user=None):
+    if not user:
+        user = anvil.users.get_user()
+
     app_tables.words.add_row(
-        guid=anvil.users.get_user()['guid'],
+        guid=user['guid'],
         word=word,
         language='de',
         n_practiced=0,
@@ -28,24 +30,44 @@ def add_word(word):
     )
 
 
-def set_word_learned(word, learned):
-    app_tables.words.search(
-        guid=anvil.users.get_user()['guid'],
+def increment_word_practiced(word, user=None):
+    if not user:
+        user = anvil.users.get_user()
+    
+    app_tables.words.get(
+        guid=user['guid'],
         language='de',
         word=word
-    )[0]['learned'] = learned
+    )['n_practiced'] += 1
 
 
-def get_list():
+def set_word_learned(word, learned, user=None):
+    if not user:
+        user = anvil.users.get_user()
+    
+    app_tables.words.get(
+        guid=user['guid'],
+        language='de',
+        word=word
+    )['learned'] = learned
+
+
+def get_list(user=None):
+    if not user:
+        user = anvil.users.get_user()
+    
     return app_tables.words.search(
-        guid=anvil.users.get_user()['guid'],
+        guid=user['guid'],
         language='de'
     )
 
 
-def delete_word(word):
-    app_tables.words.search(
-        guid=anvil.users.get_user()['guid'],
+def delete_word(word, user=None):
+    if not user:
+        user = anvil.users.get_user()
+    
+    app_tables.words.get(
+        guid=user['guid'],
         language='de',
         word=word
-    )[0].delete()
+    ).delete()
