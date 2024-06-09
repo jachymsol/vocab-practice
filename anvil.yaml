@@ -84,11 +84,14 @@ db_schema:
     - name: next_word
       admin_ui: {width: 200, order: 2}
       type: string
-    - name: next_exercises
+    - name: next_examples
       admin_ui: {width: 200, order: 3}
-      type: string
+      type: simpleObject
     - name: next_translation
       admin_ui: {width: 200, order: 4}
       type: string
+    - name: next_invalidated
+      admin_ui: {width: 200, order: 5}
+      type: bool
     title: Cached_Practice
 renamed: true

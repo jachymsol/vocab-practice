@@ -1,6 +1,7 @@
+import NextPracticeCache
 import OpenAI as AI
-import WordList
 import Users
+import WordList
 import anvil.server
 
 
@@ -10,12 +11,29 @@ def generate_guid(user_id):
 
 @anvil.server.callable
 def get_practice_lesson():
+    user = anvil.users.get_user()
+    if not user:
+        return {"error": "User not logged in."}
+
+    cached_lesson = NextPracticeCache.get_cached_practice(user=user)
+    if cached_lesson:
+        NextPracticeCache.invalidate_cached_practice(user=user)
+        anvil.server.launch_background_task('refresh_next_practice_cache_task', user=user, force=True)
+        return {
+            "word": cached_lesson['next_word'],
+            "exists": True,
+            "examples": cached_lesson['next_examples'],
+            "translation": cached_lesson['next_translation']
+        }
+    
     word = WordList.get_practice_word()
     examples = AI.get_examples('de', word, 3)
     translation = AI.get_translation('de', word)
 
     if "error" in examples or "error" in translation:
         return {"error": f"Error getting practice lesson: {examples['error'] if 'error' in examples else translation['error']}"}
+    
+    anvil.server.launch_background_task('refresh_next_practice_cache_task', user=user, force=True)
     return {
         "word": word,
         "exists": examples.get("exists", False) and translation.get("exists", False),
@@ -42,6 +60,16 @@ def get_examples(word):
         "exists": examples.get("exists", False),
         "examples": examples.get("examples", [])
     }
+
+@anvil.server.callable
+def refresh_next_practice_cache(force=False):
+    user = anvil.users.get_user()
+    if user:
+        anvil.server.launch_background_task('refresh_next_practice_cache_task', user, force)
+
+@anvil.server.background_task
+def refresh_next_practice_cache_task(user, force=False):
+    NextPracticeCache.refresh_next_practice_cache(user, force)
 
 @anvil.server.callable
 def get_words_list():

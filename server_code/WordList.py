@@ -3,9 +3,12 @@ import anvil.users
 from anvil.tables import app_tables
 
 
-def get_practice_word():
+def get_practice_word(user=None):
+    if not user:
+        user = anvil.users.get_user()
+
     words = app_tables.words.search(
-        guid=anvil.users.get_user()['guid'],
+        guid=user['guid'],
         language='de',
         learned=False
     )

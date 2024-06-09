@@ -14,6 +14,7 @@ class HomePage(HomePageTemplate):
     # Any code you write here will run before the form opens.
     user = anvil.users.get_user()
     if user:
+      anvil.server.call('refresh_next_practice_cache', False)
       self.show_logged_in(user)
 
   def login_button_click(self, **event_args):
@@ -23,6 +24,8 @@ class HomePage(HomePageTemplate):
     if user:
       if user['guid'] == None:
         anvil.server.call('generate_guid', user.get_id())
+      with anvil.server.no_loading_indicator:
+        anvil.server.call('refresh_next_practice_cache', False)
       self.show_logged_in(user)
   
   def logout_button_click(self, **event_args):
