@@ -18,7 +18,6 @@ components:
   - name: login_button
     properties: {text: Log In, role: outlined-button}
     type: Button
-    layout_properties: {}
     event_bindings: {click: login_button_click}
 - name: column_panel_1
   properties: {}
