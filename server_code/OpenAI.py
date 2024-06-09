@@ -82,10 +82,18 @@ def get_examples(language, word, num_examples):
     "additionalProperties": False,
   }
 
-  model_output = get_response_batch(model_input, examples_assistant)
-  response = json.loads(model_output)
-  verify_response(response, output_schema)
-  return response
+  num_attempts_left = 3
+  while True:
+    try:
+      model_output = get_response_batch(model_input, examples_assistant)
+      response = json.loads(model_output)
+      verify_response(response, output_schema)
+      return response
+    except (json.JSONDecodeError, jsonschema.ValidationError) as e:
+      if num_attempts_left == 0:
+        raise Exception(f"Error getting examples: {e}")
+      num_attempts_left -= 1
+      continue
 
 
 def get_translation(language, word):
@@ -99,7 +107,15 @@ def get_translation(language, word):
     "additionalProperties": False,
   }
 
-  model_output = get_response_batch(model_input, translations_assistant)
-  response = json.loads(model_output)
-  verify_response(response, output_schema)
-  return response
+  num_attempts_left = 3
+  while True:
+    try:
+      model_output = get_response_batch(model_input, translations_assistant)
+      response = json.loads(model_output)
+      verify_response(response, output_schema)
+      return response
+    except (json.JSONDecodeError, jsonschema.ValidationError) as e:
+      if num_attempts_left == 0:
+        raise Exception(f"Error getting translation: {e}")
+      num_attempts_left -= 1
+      continue
