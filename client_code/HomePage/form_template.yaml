@@ -13,8 +13,9 @@ components:
   layout_properties: {slot: nav-right}
   components:
   - name: logged_email
-    properties: {}
+    properties: {font: '', text: '', font_size: 15}
     type: Label
+    layout_properties: {}
   - name: login_button
     properties: {text: Log In, role: outlined-button}
     type: Button
