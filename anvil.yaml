@@ -71,4 +71,24 @@ db_schema:
       admin_ui: {width: 200, order: 5}
       type: number
     title: Words
+  cached_practice:
+    client: none
+    server: full
+    columns:
+    - name: guid
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: language
+      admin_ui: {width: 200, order: 1}
+      type: string
+    - name: next_word
+      admin_ui: {width: 200, order: 2}
+      type: string
+    - name: next_exercises
+      admin_ui: {width: 200, order: 3}
+      type: string
+    - name: next_translation
+      admin_ui: {width: 200, order: 4}
+      type: string
+    title: Cached_Practice
 renamed: true
