@@ -87,5 +87,9 @@ def set_word_learned(word, learned):
     WordList.set_word_learned(word, learned)
 
 @anvil.server.callable
+def set_word_confidence(word, confidence):
+    WordList.set_word_confidence(word, confidence)
+
+@anvil.server.callable
 def delete_word(word):
     WordList.delete_word(word)

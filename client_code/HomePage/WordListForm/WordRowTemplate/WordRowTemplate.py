@@ -13,6 +13,16 @@ class WordRowTemplate(WordRowTemplateTemplate):
     """This method is called when the button is clicked"""
     anvil.server.call('set_word_learned', self.item['word'], not self.item['learned'])
     self.parent.raise_event('x-refresh-words')
+
+  def confidence_up_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    anvil.server.call('set_word_confidence', self.item['word'], min(100, self.item['confidence'] + 10))
+    self.parent.raise_event('x-refresh-words')
+  
+  def confidence_down_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    anvil.server.call('set_word_confidence', self.item['word'], max(0, self.item['confidence'] - 10))
+    self.parent.raise_event('x-refresh-words')
   
   def remove_word_button_click(self, **event_args):
     """This method is called when the button is clicked"""

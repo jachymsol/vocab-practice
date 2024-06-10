@@ -54,6 +54,17 @@ def set_word_learned(word, learned, user=None):
     )['learned'] = learned
 
 
+def set_word_confidence(word, confidence, user=None):
+    if not user:
+        user = anvil.users.get_user()
+    
+    app_tables.words.get(
+        guid=user['guid'],
+        language='de',
+        word=word
+    )['confidence'] = confidence
+
+
 def get_list(user=None):
     if not user:
         user = anvil.users.get_user()

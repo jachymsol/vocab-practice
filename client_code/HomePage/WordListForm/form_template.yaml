@@ -7,7 +7,7 @@ components:
     - {id: FAYELS, data_key: n_practiced, title: Times Practiced}
     - {id: XZSAOJ, data_key: learned, title: Marked as Learned}
     - {id: AUAFVW, data_key: confidence, title: Confidence}
-    - {id: ZEWBDB, data_key: remove, title: Actions}
+    - {id: ZEWBDB, data_key: remove, title: Remove Word}
   type: DataGrid
   components:
   - name: word_row

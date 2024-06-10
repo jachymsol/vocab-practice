@@ -712,6 +712,10 @@ button.close > span, button.close {
   background-color: transparent;
 }
 
+.anvil-role-icon-button > .btn {
+  padding: 10px;
+}
+
 
 /* Component: Card */
 

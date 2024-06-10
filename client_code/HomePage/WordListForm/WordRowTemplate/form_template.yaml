@@ -19,7 +19,7 @@ components:
   layout_properties: {column: ZEWBDB}
   components:
   - name: remove_word_button
-    properties: {text: '', icon: 'fa:trash', icon_align: top}
+    properties: {text: '', icon: 'fa:trash', icon_align: top, role: icon-button}
     type: Button
     layout_properties: {}
     event_bindings: {click: remove_word_button_click}
@@ -34,7 +34,7 @@ components:
     data_bindings:
     - {property: text, code: 'self.item[''learned'']', writeback: false}
   - name: toggle_learned_button
-    properties: {text: '', icon: '', icon_align: top}
+    properties: {text: '', icon: '', icon_align: top, role: icon-button}
     type: Button
     data_bindings:
     - {property: icon, code: '''fa:close'' if self.item[''learned''] else ''fa:check''', writeback: false}
@@ -50,10 +50,12 @@ components:
     data_bindings:
     - {property: text, code: 'self.item[''confidence'']', writeback: false}
   - name: confidence_up_button
-    properties: {text: '', icon: 'fa:angle-up', icon_align: top, font_size: null}
+    properties: {text: '', icon: 'fa:angle-up', icon_align: top, role: icon-button}
     type: Button
     layout_properties: {}
+    event_bindings: {click: confidence_up_button_click}
   - name: confidence_down_button
-    properties: {text: '', icon: 'fa:angle-down', role: null, icon_align: top}
+    properties: {text: '', icon: 'fa:angle-down', icon_align: top, role: icon-button}
     type: Button
     layout_properties: {}
+    event_bindings: {click: confidence_down_button_click}
