@@ -1,5 +1,6 @@
 import random
 import anvil.users
+import anvil.tables.query as q
 from anvil.tables import app_tables
 
 
@@ -21,6 +22,14 @@ def get_practice_word(user=None):
 def add_word(word, user=None):
     if not user:
         user = anvil.users.get_user()
+    
+    word_in_list = app_tables.words.get(
+        guid=user['guid'],
+        language='de',
+        word=q.ilike(word)
+    )
+    if len(word_in_list) > 0:
+        return {'error': f'Word {word} is already in your list.'}
 
     app_tables.words.add_row(
         guid=user['guid'],
@@ -30,6 +39,7 @@ def add_word(word, user=None):
         learned=False,
         confidence=50
     )
+    return {}
 
 
 def increment_word_practiced(word, user=None):
@@ -41,6 +51,7 @@ def increment_word_practiced(word, user=None):
         language='de',
         word=word
     )['n_practiced'] += 1
+    return {}
 
 
 def set_word_learned(word, learned, user=None):
@@ -52,6 +63,7 @@ def set_word_learned(word, learned, user=None):
         language='de',
         word=word
     )['learned'] = learned
+    return {}
 
 
 def set_word_confidence(word, confidence, user=None):
@@ -63,6 +75,7 @@ def set_word_confidence(word, confidence, user=None):
         language='de',
         word=word
     )['confidence'] = confidence
+    return {}
 
 
 def get_list(user=None):
@@ -84,3 +97,4 @@ def delete_word(word, user=None):
         language='de',
         word=word
     ).delete()
+    return {}
