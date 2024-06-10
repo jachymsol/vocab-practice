@@ -22,9 +22,11 @@ class PracticeForm(PracticeFormTemplate):
             anvil.Notification(res.get("error"), style="danger").show()
             return
         if not res.get("exists"):
-            anvil.Notification(f"The word {res.get('word')} does not exist.", style="warning").show()
-            return
-        
+            if anvil.confirm(f"The word {res.get('word')} does not exist. Do you want to remove it from the list?"):
+                anvil.server.call("delete_word", res.get("word"))
+                anvil.Notification(f"The word <strong>{res.get('word')}</strong> removed from the list.", style="success").show()
+                return
+
         self.item["practice_word"] = res.get("word")
         self.item["practice_examples"] = "\n".join(res.get("examples"))
         self.item["practice_translation"] = res.get("translation")

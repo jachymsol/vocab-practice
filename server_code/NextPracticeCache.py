@@ -18,6 +18,9 @@ def refresh_next_practice_cache(user, force=False):
     if "error" in examples or "error" in translation:
         raise Exception(f"Error getting practice lesson: {examples['error'] if 'error' in examples else translation['error']}")
 
+    if examples.get("exists", False) or translation.get("exists", False):
+        return
+
     save_cached_practice(user, word, examples.get('examples', []), translation.get('translation', ""), practice)
 
 def save_cached_practice(user, word, examples, translation, existing_row=None):
