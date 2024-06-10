@@ -28,6 +28,9 @@ def get_practice_lesson():
         }
     
     word = WordList.get_practice_word()
+    if not word:
+        return {"error": "No words to practice, add a word."}
+    
     examples = AI.get_examples('de', word, 3)
     translation = AI.get_translation('de', word)
 

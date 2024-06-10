@@ -9,6 +9,9 @@ def refresh_next_practice_cache(user, force=False):
         return {}
     
     word = WordList.get_practice_word(user=user)
+    if not word:
+        return
+
     examples = AI.get_examples('de', word, 3)
     translation = AI.get_translation('de', word)
 
