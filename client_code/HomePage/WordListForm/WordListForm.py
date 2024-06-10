@@ -9,6 +9,10 @@ class WordListForm(WordListFormTemplate):
 
     # Any code you write here will run before the form opens.
     self.word_row.set_event_handler('x-refresh-words', self.refresh_words)
+    
+    if anvil.users.get_user() == None:
+      anvil.Notification("You must be logged in to save and view words", style="warning").show()
+      return
     self.refresh_words()
 
   def refresh_words(self, **event_args):
