@@ -1,13 +1,18 @@
-VERSION=grep 'app_version' anvil.yaml | cut -d ' ' -f 2
+#!/bin/bash
+set -e
+
+VERSION=$(grep 'app_version' anvil.yaml | cut -d ' ' -f 2)
 
 docker build -t us-central1-docker.pkg.dev/jachymsol-vocabulary-practice/jachymsol-docker/vocab-practice-app:$VERSION .
 docker push us-central1-docker.pkg.dev/jachymsol-vocabulary-practice/jachymsol-docker/vocab-practice-app:$VERSION
 
-gcloud compute instances create-with-container vocab-practice-app \
+gcloud compute instances create vocab-practice-app \
     --project=jachymsol-vocabulary-practice \
     --zone=us-central1-f \
     --machine-type=e2-micro \
     --network-interface=address=35.208.81.151,network-tier=STANDARD,stack-type=IPV4_ONLY,subnet=default \
+    --public-ptr \
+    --public-ptr-domain=vocab.solecky.com \
     --maintenance-policy=MIGRATE \
     --provisioning-model=STANDARD \
     --service-account=184798976963-compute@developer.gserviceaccount.com \
@@ -21,12 +26,15 @@ gcloud compute instances create-with-container vocab-practice-app \
     --no-shielded-secure-boot \
     --shielded-vtpm \
     --shielded-integrity-monitoring \
-    --labels=goog-ec-src=vm_add-gcloud,container-vm=cos-stable-113-18244-85-24 \
-    --metadata=startup-script='#! /bin/bash
-  sudo apt-get update && sudo apt-get install -y docker.io
-  sudo mkdir -p /mnt/disks/anvil-db
-  sudo chmod 777 /mnt/disks/anvil-db
-  sudo ls -l /dev/disk/by-id | grep -o 'google-vocab-db -> ../../sd[a-z]' | tail -c 4 | xargs -I {} sudo mount /dev/{} /mnt/disks/anvil-db
-  sudo docker pull us-central1-docker.pkg.dev/jachymsol-vocabulary-practice/jachymsol-docker/vocab-practice-app:$VERSION
-  sudo docker run -d --name vocab-practice-app -v /mnt/disks/anvil-db/:/anvil-db/ -p 443:443 us-central1-docker.pkg.dev/jachymsol-vocabulary-practice/jachymsol-docker/vocab-practice-app:$VERSION --app MainApp --origin https://vocab.solecky.com --data-dir /anvil-db --letsencrypt-storage /anvil-db/certs.json
-  EOF'
+    --labels=goog-ec-src=vm_add-gcloud \
+    --metadata=startup-script="apt-get update && apt-get install -y docker.io
+usermod -aG docker solejabreck
+
+mkdir -p /mnt/disks/anvil-db && chmod 777 /mnt/disks/anvil-db
+
+ls -l /dev/disk/by-id | grep -o 'google-vocab-db -> ../../sd[a-z]' | tail -c 4 | xargs -I {} mount /dev/{} /mnt/disks/anvil-db
+
+gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+docker pull us-central1-docker.pkg.dev/jachymsol-vocabulary-practice/jachymsol-docker/vocab-practice-app:$VERSION
+docker run -d --name vocab-practice-app -v /mnt/disks/anvil-db/:/anvil-db/ -p 443:443 us-central1-docker.pkg.dev/jachymsol-vocabulary-practice/jachymsol-docker/vocab-practice-app:$VERSION --app MainApp --origin https://vocab.solecky.com --data-dir /anvil-db --letsencrypt-storage /anvil-db/certs.json
+EOF"
