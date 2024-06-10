@@ -48,6 +48,9 @@ def get_practice_lesson():
 
 @anvil.server.callable
 def get_translation(word):
+    if not word:
+        return {"error": "No word provided."}
+
     translation = AI.get_translation('de', word)
     if "error" in translation:
         return {"error": f"Error getting translation: {translation['error']}"}
@@ -58,6 +61,9 @@ def get_translation(word):
 
 @anvil.server.callable
 def get_examples(word):
+    if not word:
+        return {"error": "No word provided."}
+
     examples = AI.get_examples('de', word, 5)
     if "error" in examples:
         return {"error": f"Error getting examples: {examples['error']}"}
