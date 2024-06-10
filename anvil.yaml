@@ -4,16 +4,14 @@ services:
   client_config: {}
   server_config: {}
 - source: /runtime/services/anvil/users.yml
-  client_config: {allow_signup: true, enable_automatically: true, use_email: true,
-    confirm_email: false, allow_remember_me: true, remember_me_days: 30}
+  client_config: {allow_signup: true, enable_automatically: true, use_email: true, confirm_email: false, allow_remember_me: true, remember_me_days: 30}
   server_config: {user_table: users}
 startup: {type: form, module: HomePage}
 package_name: Vocabulary_Practice
 allow_embedding: false
 name: Vocabulary Practice
 app_version: 0.1.2
-runtime_options: {version: 2, client_version: '3', server_version: python3-sandbox,
-  server_spec: null}
+runtime_options: {version: 2, client_version: '3', server_version: python3-sandbox, server_spec: null}
 metadata: {title: Vocabulary Practice, description: Web-app designed to practice your vocabulary}
 startup_form: null
 db_schema:
