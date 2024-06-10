@@ -12,6 +12,8 @@ def get_practice_word(user=None):
         language='de',
         learned=False
     )
+    if len(words) == 0:
+        return None
     word_to_practice = random.choices(words, weights=[100 - word['confidence'] for word in words], k=1)[0]
     return word_to_practice['word']
 
