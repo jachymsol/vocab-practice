@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 python:3-buster
+FROM python:3-buster
 
 RUN apt-get -yyy update && apt-get -yyy install software-properties-common && \
     wget -O- https://apt.corretto.aws/corretto.key | apt-key add - && \
@@ -25,6 +25,6 @@ RUN useradd anvil
 RUN chown -R anvil:anvil /anvil-data
 USER anvil
 
-ENTRYPOINT ["anvil-app-server", "--data-dir", "/anvil-data"]
+ENTRYPOINT ["anvil-app-server"]
 
-CMD ["--app", "MainApp"]
+CMD ["--app", "MainApp", "--data-dir", "/anvil-data"]
