@@ -10,7 +10,7 @@ components:
     - {id: ZEWBDB, data_key: remove, title: Remove Word}
   type: DataGrid
   components:
-  - name: flow_panel_1
+  - name: search_flow_panel
     properties: {}
     type: FlowPanel
     components:
@@ -18,11 +18,12 @@ components:
       properties: {role: null}
       type: TextBox
       layout_properties: {}
-      event_bindings: {pressed_enter: search_box_pressed_enter}
+      event_bindings: {pressed_enter: refresh_words}
     - name: search_button
       properties: {text: '', role: icon-button, icon: 'fa:search'}
       type: Button
       layout_properties: {}
+      event_bindings: {click: refresh_words}
   - name: word_row
     properties: {item_template: HomePage.WordListForm.WordRowTemplate}
     type: RepeatingPanel

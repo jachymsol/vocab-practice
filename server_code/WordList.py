@@ -78,13 +78,14 @@ def set_word_confidence(word, confidence, user=None):
     return {}
 
 
-def get_list(user=None):
+def get_list(pattern="", user=None):
     if not user:
         user = anvil.users.get_user()
     
     return app_tables.words.search(
         guid=user['guid'],
-        language='de'
+        language='de',
+        word=q.ilike(f"%{pattern}%")
     )
 
 

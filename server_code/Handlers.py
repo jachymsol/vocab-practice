@@ -83,8 +83,8 @@ def refresh_next_practice_cache_task(user, force=False):
     NextPracticeCache.refresh_next_practice_cache(user, force)
 
 @anvil.server.callable
-def get_words_list():
-    return WordList.get_list()
+def search_words_list(pattern):
+    return WordList.get_list(pattern)
 
 @anvil.server.callable
 def add_word_to_list(word):

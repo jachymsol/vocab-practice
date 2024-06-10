@@ -16,5 +16,5 @@ class WordListForm(WordListFormTemplate):
     self.refresh_words()
 
   def refresh_words(self, **event_args):
-    words_list = anvil.server.call('get_words_list')
+    words_list = anvil.server.call('search_words_list', self.search_box.text)
     self.word_row.items = [{'word': word['word'], 'n_practiced': word['n_practiced'], 'learned': word['learned'], 'confidence': word['confidence']} for word in words_list]
