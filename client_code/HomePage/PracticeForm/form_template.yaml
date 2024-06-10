@@ -54,6 +54,7 @@ components:
         properties: {text: Mark as Learned, icon: 'fa:check', role: outlined-button}
         type: Button
         layout_properties: {grid_position: 'UFNEMP,WYKNHD'}
+        event_bindings: {click: mark_practice_as_learned_button_click}
       - name: next_practice_button
         properties: {text: Next, role: tonal-button}
         type: Button

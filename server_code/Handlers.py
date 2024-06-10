@@ -94,11 +94,14 @@ def add_word_to_list(word):
 @anvil.server.callable
 def set_word_learned(word, learned):
     WordList.set_word_learned(word, learned)
+    return {}
 
 @anvil.server.callable
 def set_word_confidence(word, confidence):
     WordList.set_word_confidence(word, confidence)
+    return {}
 
 @anvil.server.callable
 def delete_word(word):
     WordList.delete_word(word)
+    return {}

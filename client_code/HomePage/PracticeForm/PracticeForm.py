@@ -30,6 +30,7 @@ class PracticeForm(PracticeFormTemplate):
         self.item["practice_translation"] = res.get("translation")
 
         self.item["practice_translation_visible"] = False
+        self.mark_practice_as_learned_button.enabled = True
         self.refresh_data_bindings()
 
     def start_practice_button_click(self, **event_args):
@@ -44,6 +45,16 @@ class PracticeForm(PracticeFormTemplate):
         """This method is called when the button is clicked"""
         self.item["practice_translation_visible"] = True
         self.refresh_data_bindings()
+
+    def mark_practice_as_learned_button_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        res = anvil.server.call("set_word_learned", self.item["practice_word"], True)
+        if "error" in res:
+            anvil.Notification(res.get("error"), style="danger").show()
+            return
+
+        self.mark_practice_as_learned_button.enabled = False
+        anvil.Notification(f"Word <strong>{self.item['practice_word']}</strong> marked as learned successfully", style="success").show()
 
     def next_practice_button_click(self, **event_args):
         """This method is called when the button is clicked"""
