@@ -8,7 +8,7 @@ services:
   server_config: {user_table: users}
 - source: /runtime/services/anvil/email.yml
   client_config: {}
-  server_config: {custom_smtp: true}
+  server_config: {custom_smtp: true, smtp_host: smtp.cesky-hosting.cz, smtp_port: 587, smtp_user: vocab@solecky.com, smtp_password: 8pHavswcljOusAkctxW8GWmn8en5SLdyWllwzBOdnaoKZ9mgLtFa8TacMpI2DO12FmKPrQu3HK+uDZ/IbKDZbPF6Dt7ySjWXO5P3RX2bLh+DKVySFtITJSb9LExiBrr+x+9KhrLZOtzp3xQWOBxbS6FvBjkOTXDmsLxjc/qwnkT3jPSEies=}
 startup: {type: form, module: HomePage}
 package_name: Vocabulary_Practice
 allow_embedding: false
