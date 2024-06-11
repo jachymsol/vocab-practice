@@ -1,4 +1,3 @@
-import anvil.email
 import OpenAI as AI
 import WordList
 import anvil.users

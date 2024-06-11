@@ -1,4 +1,3 @@
-import anvil.email
 import os
 import json
 import jsonschema

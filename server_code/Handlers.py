@@ -1,4 +1,3 @@
-import anvil.email
 import NextPracticeCache
 import OpenAI as AI
 import Users
