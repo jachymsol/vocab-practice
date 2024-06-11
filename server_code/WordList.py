@@ -1,4 +1,3 @@
-import anvil.email
 import random
 import anvil.users
 import anvil.tables.query as q

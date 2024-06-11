@@ -1,4 +1,3 @@
-import anvil.email
 import uuid
 from anvil.tables import app_tables
 
