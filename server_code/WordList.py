@@ -23,7 +23,7 @@ def add_word(word, user=None):
     if not user:
         user = anvil.users.get_user()
     
-    word_in_list = app_tables.words.get(
+    word_in_list = app_tables.words.search(
         guid=user['guid'],
         language='de',
         word=q.ilike(word)
