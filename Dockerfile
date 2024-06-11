@@ -30,7 +30,8 @@ COPY client_code /apps/MainApp/client_code
 COPY theme /apps/MainApp/theme
 COPY __init__.py /apps/MainApp/__init__.py
 COPY anvil.yaml /apps/MainApp/anvil.yaml
+COPY Makefile /apps/Makefile
 
-ENTRYPOINT ["anvil-app-server", "--data-dir", "/anvil-data"]
+ENTRYPOINT ["make"]
 
-CMD ["--app", "MainApp"]
+CMD ["run-default"]

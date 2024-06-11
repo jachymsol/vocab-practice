@@ -9,6 +9,9 @@ test:
 deploy:
 	bash deploy_gce_manual.sh
 
+run-default:
+	anvil-app-server --app MainApp --data-dir /anvil-data
+
 run:
 	anvil-app-server --app $APP_NAME --origin $ORIGIN --data-dir $DATA_DIR
 
