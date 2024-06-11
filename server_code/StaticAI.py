@@ -1,3 +1,4 @@
+import anvil.email
 def get_examples(word):
     return f"""1. Word context example for word {word}.
     2. The word {word} is often use in this scenario.
