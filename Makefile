@@ -10,7 +10,7 @@ deploy:
 	bash deploy_gce_manual.sh
 
 run-default:
-	anvil-app-server --app MainApp --data-dir /anvil-data --dep-id C6ZZPAPN4YYF5NVJ=${ANVIL_EXTRAS_LOCATION}
+	anvil-app-server --app MainApp --data-dir /anvil-data --dep-id C6ZZPAPN4YYF5NVJ=AnvilExtras
 
 run:
 	anvil-app-server --app ${APP_NAME} --origin ${ORIGIN} --data-dir ${DATA_DIR} --dep-id C6ZZPAPN4YYF5NVJ=${ANVIL_EXTRAS_LOCATION}

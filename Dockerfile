@@ -25,6 +25,7 @@ RUN useradd anvil
 RUN chown -R anvil:anvil /anvil-data
 USER anvil
 
+ADD https://github.com/anvilistas/anvil-extras.git /apps/AnvilExtras
 COPY server_code /apps/MainApp/server_code
 COPY client_code /apps/MainApp/client_code
 COPY theme /apps/MainApp/theme
