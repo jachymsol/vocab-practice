@@ -1,5 +1,6 @@
 from ._anvil_designer import WordListFormTemplate # type: ignore
 import anvil.server
+from anvil.js.window import document
 
 
 class WordListForm(WordListFormTemplate):
@@ -8,6 +9,7 @@ class WordListForm(WordListFormTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+    document.addEventListener('keyup', self.global_keyboard_shortcuts)
     self.word_row.set_event_handler('x-refresh-words', self.refresh_words)
     
     if anvil.users.get_user() == None:
@@ -18,3 +20,7 @@ class WordListForm(WordListFormTemplate):
   def refresh_words(self, **event_args):
     words_list = anvil.server.call('search_words_list', self.search_box.text)
     self.word_row.items = [{'word': word['word'], 'n_practiced': word['n_practiced'], 'learned': word['learned'], 'confidence': word['confidence']} for word in words_list]
+
+  def global_keyboard_shortcuts(self, event):
+    if event.key == '/':
+      self.search_box.focus()

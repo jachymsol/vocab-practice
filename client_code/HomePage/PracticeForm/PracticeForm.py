@@ -1,6 +1,8 @@
 from ._anvil_designer import PracticeFormTemplate # type: ignore
 import anvil.server
 import anvil.users
+from anvil.js.window import document
+from anvil_extras import augment
 
 
 class PracticeForm(PracticeFormTemplate):
@@ -15,6 +17,8 @@ class PracticeForm(PracticeFormTemplate):
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
+        document.addEventListener('keyup', self.global_keyboard_shortcuts)
+        augment.set_event_handler(self.word_input, "keydown", self.word_input_keydown)
 
     def show_next_practice(self):
         res = anvil.server.call('get_practice_lesson')
@@ -42,7 +46,7 @@ class PracticeForm(PracticeFormTemplate):
             return
 
         self.show_next_practice()
-
+    
     def show_practice_translation_button_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.item["practice_translation_visible"] = True
@@ -61,6 +65,19 @@ class PracticeForm(PracticeFormTemplate):
     def next_practice_button_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.show_next_practice()
+    
+    def word_input_keydown(self, **event_args):
+        """This method is called when the user presses a key in this component"""
+        if event_args.get('key') == 'Enter' and (event_args.get('meta_key') or event_args.get('ctrl_key')):
+            self.add_word_to_list_click()
+            return
+        if event_args.get('key') == 'Enter' and event_args.get('shift_key'):
+            self.view_translation_click()
+            return
+        if event_args.get('key') == 'Enter':
+            self.view_word_examples_click()
+            return
+        
 
     def view_translation_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -107,3 +124,13 @@ class PracticeForm(PracticeFormTemplate):
         self.word_input.text = ""
         self.single_word_info.visible = False
         self.refresh_data_bindings()
+
+    def global_keyboard_shortcuts(self, event):
+        if event.key == '/':
+            self.word_input.focus()
+            self.word_input.text = ""
+        if event.key == '>':
+            self.show_next_practice()
+        if event.key == '?':
+            self.show_practice_translation_button_click()
+        
