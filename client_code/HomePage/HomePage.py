@@ -17,6 +17,11 @@ class HomePage(HomePageTemplate):
     if user:
       anvil.server.call('refresh_next_practice_cache', False)
       self.show_logged_in(user)
+    
+  def on_form_load(self, **event_args):
+    # Runs every time the form loads
+    if event_args.get('url_hash') == "words":
+      event_args.get('form').word_row.raise_event('x-refresh-words')
 
   def login_button_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -25,8 +30,7 @@ class HomePage(HomePageTemplate):
     if user:
       if user['guid'] == None:
         anvil.server.call('generate_guid', user.get_id())
-      with anvil.server.no_loading_indicator:
-        anvil.server.call('refresh_next_practice_cache', False)
+      anvil.server.call_s('refresh_next_practice_cache', False)
       self.show_logged_in(user)
   
   def logout_button_click(self, **event_args):
@@ -36,6 +40,8 @@ class HomePage(HomePageTemplate):
     self.login_button.text = "Login"
     self.login_button.set_event_handler('click', self.login_button_click)
     self.refresh_data_bindings()
+    routing.remove_from_cache('words')
+    routing.set_url_hash('', load_from_cache=False)
 
   def show_logged_in(self, user):
     self.logged_email.text = user['email']
