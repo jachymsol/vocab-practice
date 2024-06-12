@@ -1,10 +1,12 @@
 from ._anvil_designer import PracticeFormTemplate # type: ignore
 from anvil.js.window import document # type: ignore
 from anvil_extras import augment # type: ignore
+from anvil_extras import routing # type: ignore
 import anvil.server
 import anvil.users
 
 
+@routing.route('')
 class PracticeForm(PracticeFormTemplate):
     def __init__(self, **properties):
         # Set Item properties

@@ -1,8 +1,10 @@
 from ._anvil_designer import WordListFormTemplate # type: ignore
 from anvil.js.window import document # type: ignore
+from anvil_extras import routing # type: ignore
 import anvil.server
 
 
+@routing.route('words')
 class WordListForm(WordListFormTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
