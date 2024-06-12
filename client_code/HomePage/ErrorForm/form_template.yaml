@@ -1,0 +1,21 @@
+container: {type: ColumnPanel}
+components:
+- type: ColumnPanel
+  properties: {col_widths: '{}', visible: true}
+  name: content_panel
+  layout_properties: {slot: default}
+  components:
+  - name: error_spacer_1
+    properties: {height: 20}
+    type: Spacer
+  - name: error_label
+    properties: {text: 'Sorry, this page does not exist.', align: center, role: title, background: '', visible: true}
+    type: Label
+  - name: error_spacer_2
+    properties: {height: 20}
+    type: Spacer
+  - name: home_button
+    properties: {text: Go Home, role: tonal-button, font: '', font_size: 32, enabled: true}
+    type: Button
+    event_bindings: {click: home_button_click}
+is_package: true

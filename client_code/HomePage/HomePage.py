@@ -1,7 +1,6 @@
 from ._anvil_designer import HomePageTemplate # type: ignore
 from anvil_extras import routing # type: ignore
-from PracticeForm import PracticeForm
-from WordListForm import WordListForm
+import PracticeForm, WordListForm, ErrorForm
 import anvil.server
 import anvil.users
 
