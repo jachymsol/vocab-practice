@@ -1,8 +1,8 @@
 from ._anvil_designer import PracticeFormTemplate # type: ignore
+from anvil.js.window import document # type: ignore
+from anvil_extras import augment # type: ignore
 import anvil.server
 import anvil.users
-from anvil.js.window import document
-from anvil_extras import augment
 
 
 class PracticeForm(PracticeFormTemplate):

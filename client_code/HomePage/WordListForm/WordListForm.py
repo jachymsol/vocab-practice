@@ -1,6 +1,6 @@
 from ._anvil_designer import WordListFormTemplate # type: ignore
+from anvil.js.window import document # type: ignore
 import anvil.server
-from anvil.js.window import document
 
 
 class WordListForm(WordListFormTemplate):
