@@ -15,7 +15,7 @@ startup: {type: form, module: HomePage}
 package_name: Vocabulary_Practice
 allow_embedding: false
 name: Vocabulary Practice
-app_version: 0.3.9
+app_version: 0.4.10
 runtime_options: {version: 2, client_version: '3', server_version: python3-sandbox, server_spec: null}
 metadata: {title: Vocabulary Practice, description: Web-app designed to practice your vocabulary}
 startup_form: null
