@@ -13,15 +13,14 @@ def refresh_next_practice_cache(user, force=False):
         return
 
     examples = AI.get_examples('de', word, 3)
-    translation = AI.get_translation('de', word)
 
-    if "error" in examples or "error" in translation:
-        raise Exception(f"Error getting practice lesson: {examples['error'] if 'error' in examples else translation['error']}")
+    if "error" in examples:
+        raise Exception(f"Error getting practice lesson: {examples['error']}")
 
-    if examples.get("exists", False) or translation.get("exists", False):
+    if examples.get("exists", False):
         return
 
-    save_cached_practice(user, word, examples.get('examples', []), translation.get('translation', ""), practice)
+    save_cached_practice(user, word, examples.get('examples', []), examples.get('translation', ""), practice)
 
 def save_cached_practice(user, word, examples, translation, existing_row=None):
     if existing_row:

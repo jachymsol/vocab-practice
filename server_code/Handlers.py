@@ -32,18 +32,17 @@ def get_practice_lesson():
         return {"error": "No words to practice, add a word."}
     
     examples = AI.get_examples('de', word, 3)
-    translation = AI.get_translation('de', word)
 
-    if "error" in examples or "error" in translation:
-        return {"error": f"Error getting practice lesson: {examples['error'] if 'error' in examples else translation['error']}"}
+    if "error" in examples:
+        return {"error": f"Error getting practice lesson: {examples['error']}"}
     
     WordList.increment_word_practiced(word, user=user)
     anvil.server.launch_background_task('refresh_next_practice_cache_task', user=user, force=True)
     return {
         "word": word,
-        "exists": examples.get("exists", False) and translation.get("exists", False),
+        "exists": examples.get("exists", False),
         "examples": examples.get("examples", []),
-        "translation": translation.get("translation", "")
+        "translation": examples.get("translation", "")
     }
 
 @anvil.server.callable

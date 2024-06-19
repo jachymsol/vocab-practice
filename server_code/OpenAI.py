@@ -78,7 +78,9 @@ def get_examples(language, word, num_examples):
     "properties": {
       "exists": {"type": "boolean"},
       "examples": {"type": "array", "items": {"type": "string"}},
+      "translation": {"type": "string"}
     },
+    "required": ["exists", "examples"],
     "additionalProperties": False,
   }
 
