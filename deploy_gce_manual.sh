@@ -6,11 +6,24 @@ VERSION=$(grep 'app_version' anvil.yaml | cut -d ' ' -f 2)
 docker build -t us-central1-docker.pkg.dev/jachymsol-vocabulary-practice/jachymsol-docker/vocab-practice-app:$VERSION .
 docker push us-central1-docker.pkg.dev/jachymsol-vocabulary-practice/jachymsol-docker/vocab-practice-app:$VERSION
 
+GCLOUD_REGION=us-central1
+GCLOUD_ZONE=us-central1-a
+
+gcloud compute addresses create vocab-practice-ip \
+  --region $GCLOUD_REGION
+
+IP_ADDRESS=$(gcloud compute addresses describe vocab-practice-ip | grep address: | cut -d ' ' -f 2) 
+
+gcloud compute disks create vocab-db \
+  --size 10 \
+  --type https://www.googleapis.com/compute/v1/projects/jachymsol-vocabulary-practice/zones/$GCLOUD_ZONE/diskTypes/pd-standard
+  --zone $GCLOUD_ZONE
+
 gcloud compute instances create vocab-practice-app \
     --project=jachymsol-vocabulary-practice \
-    --zone=us-central1-f \
+    --zone=$GCLOUD_ZONE \
     --machine-type=e2-micro \
-    --network-interface=address=35.208.81.151,network-tier=STANDARD,stack-type=IPV4_ONLY,subnet=default \
+    --network-interface=address=$IP_ADDRESS,network-tier=STANDARD,stack-type=IPV4_ONLY,subnet=default \
     --public-ptr \
     --public-ptr-domain=vocab.solecky.com \
     --maintenance-policy=MIGRATE \
